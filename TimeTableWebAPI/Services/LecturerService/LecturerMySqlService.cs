@@ -126,7 +126,7 @@ namespace TimeTableWebAPI.Services.LecturerService
 
 
 
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 0, int pageNumber = 1)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 100, int pageNumber = 1)
         {
             ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
             ///

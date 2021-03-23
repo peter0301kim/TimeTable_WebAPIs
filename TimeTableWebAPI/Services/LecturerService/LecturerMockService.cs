@@ -71,42 +71,39 @@ namespace TimeTableWebAPI.Services.LecturerService
             return apiReturnValue;
         }
         */
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 0, int pageNumber = 1)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 100, int pageNumber = 1)
         {
-            ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
-
-            try
+            return await Task.Run(() =>
             {
-                var lstLecturer = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
+                ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 
-                Lecturers lecturers = new Lecturers();
-                lecturers.TotalCount = lstLecturer.Count();
-                
-                lecturers.PageNumber = pageNumber;
-                lecturers.PageSize = pageSize;
+                try
+                {
+                    var lstLecturer = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
 
-                if(pageSize == 0)
-                {
-                    lecturers.Rows = lstLecturer;
-                }
-                else
-                {
+                    Lecturers lecturers = new Lecturers();
+                    lecturers.TotalCount = lstLecturer.Count();
+
+                    lecturers.PageNumber = pageNumber;
+                    lecturers.PageSize = pageSize;
+
                     lecturers.Rows = lstLecturer.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+                    apiReturnValue.IsSuccess = true;
+                    apiReturnValue.Object = lecturers;
+
+                }
+                catch (Exception e)
+                {
+                    apiReturnValue.IsSuccess = false;
+                    apiReturnValue.Object = null;
+                    apiReturnValue.Error.displayMessage = "";
+                    apiReturnValue.Error.errorMessage = e.Message;
                 }
 
-                apiReturnValue.IsSuccess = true;
-                apiReturnValue.Object = lecturers;
+                return apiReturnValue;
+            });
 
-            }
-            catch (Exception e)
-            {
-                apiReturnValue.IsSuccess = false;
-                apiReturnValue.Object = null;
-                apiReturnValue.Error.displayMessage = "";
-                apiReturnValue.Error.errorMessage = e.Message;
-            }
-
-            return apiReturnValue;
         }
         public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerId)
         {

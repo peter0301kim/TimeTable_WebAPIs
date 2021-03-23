@@ -9,29 +9,30 @@ using TimeTableWebAPI.Models;
 namespace TimeTableWebAPI.Services.LecturerService
 {
     /* Sample Data
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100001','James','Oliver','James@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100002','Mary','Amelia','Mary@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100003','John','Jack','John@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100004','Patricia','Olivia','Patricia@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100005','Robert','Harry','Robert@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100006','Jennifer','Isla','Jennifer@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100007','Michael','Jacob','Michael@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100008','Linda','Emily','Linda@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100009','William','Charlie','William@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100010','Elizabeth','Poppy','Elizabeth@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100011','David','Thomas','David@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100012','Barbara','Ava','Barbara@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100013','Richard','George','Richard@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100013','Susan','Isabella','Susan@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100014','Joseph','Oscar','Joseph@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100015','Jessica','Jessica','Jessica@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100016','Thomas','James','Thomas@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100017','Sarah','Liny','Sarah@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100018','Charles','William','Charles@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100015','Karen','Smith','Karen@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100016','Christopher','Jones','Christopher@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100017','Nancy','Davis','Nancy@xxx.com');
-INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('100018','Daniel','Taylor','Daniel@xxx.com');
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100001', 'James', 'Oliver','James@xxx.com','2020-06-08',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100001','James','Oliver','James@xxx.com','2020-07-11',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100002','Mary','Amelia','Mary@xxx.com','2020-06-01',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100003','John','Jack','John@xxx.com','2018-06-03',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100004','Patricia','Olivia','Patricia@xxx.com','2019-12-04',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100005','Robert','Harry','Robert@xxx.com','2019-01-25',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100006','Jennifer','Isla','Jennifer@xxx.com','2019-03-21',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100007','Michael','Jacob','Michael@xxx.com','2019-01-30',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100008','Linda','Emily','Linda@xxx.com','2019-02-20',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100009','William','Charlie','William@xxx.com','2019-12-24',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100010','Elizabeth','Poppy','Elizabeth@xxx.com','2019-10-14',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100011','David','Thomas','David@xxx.com','2019-10-25',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100012','Barbara','Ava','Barbara@xxx.com','2019-09-28',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100013','Richard','George','Richard@xxx.com','2019-07-22',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100013','Susan','Isabella','Susan@xxx.com','2019-05-24',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100014','Joseph','Oscar','Joseph@xxx.com','2019-04-11',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100015','Jessica','Jessica','Jessica@xxx.com','2019-03-12',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100016','Thomas','James','Thomas@xxx.com','2019-08-18',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100017','Sarah','Liny','Sarah@xxx.com','2017-07-13',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100018','Charles','William','Charles@xxx.com','2019-11-19',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100015','Karen','Smith','Karen@xxx.com','2017-09-20',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100016','Christopher','Jones','Christopher@xxx.com','2019-12-22',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100017','Nancy','Davis','Nancy@xxx.com','2016-04-09',1);
+INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUse) VALUES ('100018','Daniel','Taylor','Daniel@xxx.com','2015-01-08',1);
  */
 
     public class LecturerMsSqlService : ILecturerService
@@ -59,25 +60,18 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('10001
             return apiReturnValue;
         }
 
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 0, int pageNumber = 1)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(int pageSize = 100, int pageNumber = 1)
         {
             ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 
             try
             {
-                var lstLecturer = await GetListLecturer();
-
-                Lecturers lecturers = new Lecturers();
-                lecturers.TotalCount = lstLecturer.Count();
-
-                if (pageSize == 0)
-                {
-                    lecturers.Rows = lstLecturer;
-                }
-                else
-                {
-                    lecturers.Rows = lstLecturer.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-                }
+                Lecturers lecturers = new Lecturers() {
+                    TotalCount = await GetLecturerCount(),
+                    PageSize = pageSize,
+                    PageNumber = pageNumber,
+                    Rows = await GetListLecturer(pageSize, pageNumber)
+                };
 
                 apiReturnValue.IsSuccess = true;
                 apiReturnValue.Object = lecturers;
@@ -110,12 +104,66 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('10001
             return apiReturnValue;
         }
 
-        private async Task<List<Lecturer>> GetListLecturer()
+
+        private async Task<int> GetLecturerCount()
         {
             return await Task.Run(() =>
             {
+                string query = @"SELECT count(*) as LecturerCount FROM Lecturer WHERE IsUse = 1;";
 
-                string query = @"SELECT LecturerId, GivenName, LastName, EmailAddress FROM Lecturer;";
+                int lecturerCount = 0;
+                try
+                {
+                    using (SqlConnection con = new SqlConnection(InterfaceSettings.ConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, con))
+                        {
+                            con.Open();
+                            Log.Info("Infinitylaw Connection success");
+
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                if (reader.HasRows)
+                                {
+                                    while (reader.Read())
+                                    {
+                                        lecturerCount = (int)reader["LecturerCount"];
+                                    }
+                                    Log.Info("Read Data - Success");
+                                }
+                                else
+                                {
+                                    Log.Info("No Data");
+                                }
+                                reader.Close();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                    throw new Exception(ex.ToString());
+                }
+
+                return lecturerCount;
+
+            });
+        }
+        private async Task<List<Lecturer>> GetListLecturer(int pageSize, int pageNumber)
+        {
+            return await Task.Run(() =>
+            {
+                string query 
+                = $"SELECT LecturerId, GivenName, LastName, EmailAddress"
+                + "   FROM   ( SELECT    ROW_NUMBER() OVER ( ORDER BY InsertDate ) AS RowNum, * "
+                +           "  FROM      Lecturer "
+                +           " WHERE     IsUse = 1 "
+                +           " ) AS RowConstrainedResult "
+                + $" WHERE RowNum >= {(pageSize*(pageNumber-1))+1} AND RowNum <= {(pageSize*pageNumber)}"
+                +  " ORDER BY RowNum";
+
+                Log.Info($"query:{query}");
 
                 List<Lecturer> lstLecturer = new List<Lecturer>();
 
@@ -130,35 +178,25 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('10001
 
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                try
+                                if (reader.HasRows)
                                 {
-                                    if (reader.HasRows)
+                                    while (reader.Read())
                                     {
-                                        while (reader.Read())
-                                        {
-                                            Lecturer lecturer = new Lecturer();
-                                            lecturer.LecturerId = (string)reader["LecturerId"];
-                                            lecturer.GivenName = (string)reader["GivenName"];
-                                            lecturer.LastName = (string)reader["LastName"];
-                                            lecturer.EmailAddress = (string)reader["EmailAddress"];
+                                        Lecturer lecturer = new Lecturer();
+                                        lecturer.LecturerId = (string)reader["LecturerId"];
+                                        lecturer.GivenName = (string)reader["GivenName"];
+                                        lecturer.LastName = (string)reader["LastName"];
+                                        lecturer.EmailAddress = (string)reader["EmailAddress"];
 
-                                            lstLecturer.Add(lecturer);
-                                        }
-                                        Log.Info("Read Data - Success");
+                                        lstLecturer.Add(lecturer);
                                     }
-                                    else
-                                    {
-                                        Log.Info("No Data");
-                                    }
+                                    Log.Info("Read Data - Success");
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    Log.Error(ex);
+                                    Log.Info("No Data");
                                 }
-                                finally
-                                {
-                                    reader.Close();
-                                }
+                                reader.Close();
                             }
                         }
                     }
@@ -272,11 +310,5 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress) VALUES ('10001
 
             return apiReturnValue;
         }
-
-
-
-
-
-
     }
 }

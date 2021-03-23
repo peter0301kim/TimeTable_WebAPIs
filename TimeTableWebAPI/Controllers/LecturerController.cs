@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NLog;
@@ -27,9 +28,12 @@ namespace TimeTableWebAPI.Controllers
         private string InterfaceSettingsPathFile { get; set; }
         private ILecturerService LecturerService { get; set; }
 
+        public IConfiguration _configuration;
 
-        public LecturerController(IOptions<AppGlobalSettings> appGlobalSettings)
+        public LecturerController(IConfiguration configuration, IOptions<AppGlobalSettings> appGlobalSettings)
         {
+            _configuration = configuration;
+
             AppGlobalSettings = appGlobalSettings.Value;
             InterfaceSettingsPathFile = Path.Combine(AppGlobalSettings.CurrentDirectory, AppGlobalSettings.InterfaceSettingsFileName);
 
@@ -41,7 +45,7 @@ namespace TimeTableWebAPI.Controllers
 
         // GET: api/Lecturer
         [HttpGet("{pageSize}/{pageNumber}")]
-        public async Task<ActionResult<ApiReturnValue<Lecturers>>> GetLecturer(int pageSize, int pageNumber)
+        public async Task<ActionResult<ApiReturnValue<Lecturers>>> GetLecturer(int pageSize = 100, int pageNumber = 1)
         {
             ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 
