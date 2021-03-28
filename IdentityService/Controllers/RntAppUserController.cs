@@ -1,5 +1,6 @@
 ﻿using IdentityService.Data;
 using IdentityService.Model;
+using IdentityService.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,15 +22,20 @@ namespace IdentityService.Controllers
     {
         private UserManager<RntAppUser> _userManager;
         private SignInManager<RntAppUser> _signInManager;
-        private readonly ApplicationSettings _appSettings;
+        private readonly SecureSettings _appSettings;
 
+        private ILogInService LogInService { get;set;}
         public RntAppUserController(UserManager<RntAppUser> userManager,
                                     SignInManager<RntAppUser> signInManager,
-                                    IOptions<ApplicationSettings> appSettings)
+                                    IOptions<SecureSettings> appSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
+
+            DependencyInjector.UpdateInterfaceModeDependencies(true);
+            LogInService = DependencyInjector.Resolve<ILogInService>();
+
         }
 
         [HttpPost]
@@ -56,7 +62,7 @@ namespace IdentityService.Controllers
             }
         }
 
-
+        
         [HttpPost]
         [Route(nameof(LogIn))]
         //POST : /api/RntAppUser/LogIn
@@ -71,7 +77,7 @@ namespace IdentityService.Controllers
                     {
                         new Claim("UserID", user.Id.ToString())
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(1),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(
                                          new SymmetricSecurityKey(
                                              Encoding.UTF8.GetBytes(_appSettings.jwtSecure)),
@@ -88,6 +94,39 @@ namespace IdentityService.Controllers
             }
 
         }
+        
+        /*
+        [HttpPost]
+        [Route(nameof(LogIn))]
+        //POST : /api/RntAppUser/LogIn
+        public async Task<IActionResult> LogIn(LogInDTO logInDTO)
+        {
+            if (LogInService.CheckCredentials(logInDTO.UserName, logInDTO.Password))
+            {
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("UserID", user.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    SigningCredentials = new SigningCredentials(
+                                         new SymmetricSecurityKey(
+                                             Encoding.UTF8.GetBytes(_appSettings.jwtSecure)),
+                                             SecurityAlgorithms.HmacSha256Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                var token = tokenHandler.WriteToken(securityToken);
+                return Ok(new { token });
+            }
+            else
+            {
+                return BadRequest(new { message = "User name or password is incorrect." });
+
+            }
+        }
+        */
 
         [HttpGet]
         [Authorize]

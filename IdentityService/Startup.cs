@@ -32,14 +32,9 @@ namespace IdentityService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
 
-
-
-            services.Configure<ApplicationSettings>(Configuration.GetSection(@"ApplicationSettings"));
-
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.Configure<SecureSettings>(Configuration.GetSection(@"SecureSettings"));
 
             services.AddDbContext<AuthenticationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
@@ -47,7 +42,7 @@ namespace IdentityService
             services.AddDefaultIdentity<RntAppUser>()
                 .AddEntityFrameworkStores<AuthenticationDbContext>();
 
-            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JwtSecure"].ToString());
+            var key = Encoding.UTF8.GetBytes(Configuration["SecureSettings:JwtSecure"].ToString());
 
 
             services.AddAuthentication(x =>

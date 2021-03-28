@@ -1,10 +1,10 @@
 ﻿namespace IdentityService
 {
-    public class ApplicationSettings
+    public class SecureSettings
     {
         public string jwtSecure { get; set; }
 
-        public ApplicationSettings()
+        public SecureSettings()
         {
 
 
