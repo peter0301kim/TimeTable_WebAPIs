@@ -33,7 +33,7 @@ namespace TimeTableWebAPI.Services.LecturerService
             return apiReturnValue;
         }
 
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerId)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerName)
         {
             ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 

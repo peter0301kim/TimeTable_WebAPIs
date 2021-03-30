@@ -15,12 +15,12 @@ namespace TimeTableWebAPI.Services.LecturerService
         
         private string CurrentDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         private DataConnectionSettings DataConnectionSettings { get; set; }
-        private List<Lecturer> Lecturers { get; set; }
+        private List<Lecturer> ListLecturer { get; set; }
 
         public LecturerMockService(DataConnectionSettings dataConnectionSettings)
         {
             this.DataConnectionSettings = dataConnectionSettings;
-            this.Lecturers = new List<Lecturer>();
+            this.ListLecturer = new List<Lecturer>();
         }
         public async Task<ApiReturnValue<Lecturers>> CreateLecturer(Lecturer lecturer)
         {
@@ -30,12 +30,12 @@ namespace TimeTableWebAPI.Services.LecturerService
             {
                 if(System.IO.File.Exists(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")))
                 {
-                    Lecturers = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
-                }                
+                    ListLecturer = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
+                }
 
-                Lecturers.Add(lecturer);
+                ListLecturer.Add(lecturer);
 
-                System.IO.File.WriteAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json"), JsonConvert.SerializeObject(Lecturers));
+                System.IO.File.WriteAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json"), JsonConvert.SerializeObject(ListLecturer));
 
                 apiReturnValue.IsSuccess = true;
             }
@@ -103,25 +103,25 @@ namespace TimeTableWebAPI.Services.LecturerService
             });
 
         }
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerId)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerName)
         {
 
-            var value = await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 
                 try
                 {
-                    var lstLecturers = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
+                    var lstLecturer = JsonConvert.DeserializeObject<List<Lecturer>>(System.IO.File.ReadAllText(Path.Combine(CurrentDirectory, "Data", "Lecturer.json")));
 
 
-                    List<Lecturer> retLecturer = new List<Lecturer>();
+                    //List<Lecturer> lstLecturer = new List<Lecturer>();
 
                     Lecturers lecturers = new Lecturers();
                     lecturers.TotalCount = 70;
                     lecturers.PageNumber = 1;
                     lecturers.PageSize = 20;
-                    lecturers.Rows = retLecturer;
+                    lecturers.Rows = lstLecturer;
 
                     apiReturnValue.IsSuccess = true;
                     apiReturnValue.Object = lecturers;
@@ -135,8 +135,6 @@ namespace TimeTableWebAPI.Services.LecturerService
                 return apiReturnValue;
 
             });
-
-            return value;
         }
 
         public async Task<ApiReturnValue<Lecturers>> UpdateLecturer(string lecturerId, Lecturer lecturer)
@@ -159,9 +157,9 @@ namespace TimeTableWebAPI.Services.LecturerService
 
         public async Task<ApiReturnValue<Lecturers>> CreateSampleLecturer()
         {
-            ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
+            
 
-            List<Lecturer> sampleLecturers = new List<Lecturer>()
+            List<Lecturer> lstLecturer = new List<Lecturer>()
             {
                 new Lecturer { LecturerId = "100001", GivenName = "James", LastName = "Oliver", EmailAddress = "James@xxx.com" },
                 new Lecturer { LecturerId = "100002", GivenName = "Mary", LastName = "Amelia", EmailAddress = "Mary@xxx.com"},
@@ -189,10 +187,15 @@ namespace TimeTableWebAPI.Services.LecturerService
             };
             await Task.Delay(1000);
 
-            Lecturers = sampleLecturers;
+            System.IO.File.WriteAllText(Path.Combine(CurrentDirectory,"Data", "Lecturer.json"), JsonConvert.SerializeObject(lstLecturer));
 
+            ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>()
+            {
+                IsSuccess = true,
+                Error = new ApiReturnError() { displayMessage = "", errorMessage = "" },
+                Object = new Lecturers() { TotalCount = 24, PageNumber = 1, PageSize = 100 } 
+            };
 
-            System.IO.File.WriteAllText(Path.Combine(CurrentDirectory,"Data", "Lecturer.json"), JsonConvert.SerializeObject(sampleLecturers));
 
             return apiReturnValue;
         }

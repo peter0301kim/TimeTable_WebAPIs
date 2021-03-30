@@ -30,31 +30,35 @@ namespace TimeTableWebAPI.Controllers
         }
 
         // GET: api/Subject
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
+        [HttpGet("{pageSize}/{pageNumber}")]
+        public async Task<ActionResult<ApiReturnValue<Subjects>>> GetSubjects(int pageSize = 100, int pageNumber = 1)
         {
             var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
-            var subjects = await subjectService.GetSubjects();
 
-            if (subjects == null) { return NotFound(); }
+            var apiReturnValue = await subjectService.GetSubject(pageSize, pageNumber);
 
-            return subjects;
+            if (apiReturnValue == null) { return NotFound(); }
+
+            return apiReturnValue;
         }
 
         // GET: api/Subject/design
-        [HttpGet("{subjectName}")]
-        public async Task<ActionResult<List<Subject>>> GetSubjects(string subjectName)
+        [HttpGet("{subjectName}/{pageSize}/{pageNumber}")]
+        public async Task<ActionResult<ApiReturnValue<Subjects>>> GetSubjects(string subjectName, int pageSize = 100, int pageNumber = 1)
         {
             var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
-            var subjects = await subjectService.ReadSubjects(subjectName);
 
-            if (subjects == null){   return NotFound();  }
+            await subjectService.CreateSampleSubjects();
 
-            return subjects;
+            var apiReturnValue = await subjectService.GetSubject(subjectName, pageSize, pageNumber);
+
+            if (apiReturnValue == null){   return NotFound();  }
+
+            return apiReturnValue;
         }
 
         // PUT: api/Subject/5
@@ -76,23 +80,30 @@ namespace TimeTableWebAPI.Controllers
 
         // POST: api/Subject
         [HttpPost]
-        public async Task<ActionResult<Subject>> PosttblSubject(Subject subject)
+        public async Task<ActionResult<ApiReturnValue<Subjects>>> PostSubject(Subject subject)
         {
             var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
-            Subject retSubject = await subjectService.CreateSubject(subject);
+            
+            
+            var apiReturnValue = await subjectService.CreateSubject(subject);
 
-            return CreatedAtAction("GettblSubject", new { id = retSubject.SubjectCode }, retSubject);
+            return apiReturnValue;
         }
 
         // DELETE: api/Subject/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Subject>> DeletetblSubject(string id)
+        public async Task<ActionResult<ApiReturnValue<Subjects>>> DeletetblSubject(string id)
         {
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
+            var subjectService = DependencyInjector.Resolve<ISubjectService>();
 
-            Subject subject = new Subject();
-            return subject;
+
+            var apiReturnValue = await subjectService.DeleteSubject(id);
+
+            return apiReturnValue;
         }
 
         private bool tblSubjectExists(string id)

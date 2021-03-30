@@ -8,12 +8,12 @@ namespace TimeTableWebAPI.Services.SubjectService
 {
     public interface ISubjectService
     {
-        Task<Subject> CreateSubject(Subject subject);
-        Task<List<Subject>> ReadSubjects(string subjectName);
-        Task<bool> UpdateSubject(string subjectId, Subject subject);
-        Task<bool> DeleteSubject(string subjectId);
+        Task<ApiReturnValue<Subjects>> CreateSubject(Subject subject);
+        Task<ApiReturnValue<Subjects>> GetSubject(int pageSize = 100, int pageNumber = 1);
+        Task<ApiReturnValue<Subjects>> GetSubject(string subjectName, int pageSize = 100, int pageNumber = 1);
+        Task<ApiReturnValue<Subjects>> UpdateSubject(string subjectId, Subject subject);
+        Task<ApiReturnValue<Subjects>> DeleteSubject(string subjectId);
+        Task<ApiReturnValue<Subjects>> CreateSampleSubjects();
 
-        Task<bool> CreateSampleSubjects();
-        Task<List<Subject>> GetSubjects();
     }
 }

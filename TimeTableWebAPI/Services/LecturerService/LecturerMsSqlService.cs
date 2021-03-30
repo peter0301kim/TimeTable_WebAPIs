@@ -84,11 +84,11 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUs
             }
             return apiReturnValue;
         }
-        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerId)
+        public async Task<ApiReturnValue<Lecturers>> GetLecturer(string lecturerName)
         {
             ApiReturnValue<Lecturers> apiReturnValue = new ApiReturnValue<Lecturers>();
 
-            var lstLecturer = await GetLecturerById(lecturerId);
+            var lstLecturer = await GetLecturerById(lecturerName);
 
             Lecturers lecturers = new Lecturers();
             lecturers.TotalCount = 70;
