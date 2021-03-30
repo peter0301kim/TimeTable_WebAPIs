@@ -37,7 +37,7 @@ namespace TimeTableWebAPI.Controllers
             AppGlobalSettings = appGlobalSettings.Value;
             InterfaceSettingsPathFile = Path.Combine(AppGlobalSettings.CurrentDirectory, AppGlobalSettings.InterfaceSettingsFileName);
 
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var interfacesettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
             
             LecturerService = DependencyInjector.Resolve<ILecturerService>();

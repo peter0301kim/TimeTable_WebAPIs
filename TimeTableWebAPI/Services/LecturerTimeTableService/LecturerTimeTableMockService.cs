@@ -8,10 +8,10 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
 {
     public class LecturerTimeTableMockService : ILecturerTimeTableService
     {
-        private InterfaceSettings InterfaceSettings { get;set;}
-        public LecturerTimeTableMockService(InterfaceSettings interfaceSettings)
+        private DataConnectionSettings DataConnectionSettings { get;set;}
+        public LecturerTimeTableMockService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
+            this.DataConnectionSettings = dataConnectionSettings;
         }
 
         public async Task<List<TimeTable>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks)

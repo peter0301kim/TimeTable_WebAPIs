@@ -38,8 +38,8 @@ namespace TimeTableWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
-            DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
 
             var lecturerTimeTableService = DependencyInjector.Resolve<ILecturerTimeTableService>();
 

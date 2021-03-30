@@ -15,12 +15,12 @@ namespace TimeTableWebAPI.Services.SubjectService
         public MsSqlConnectionSettings ConnectionSettings { get; set; }
         private string ConnectionFile { get; set; }
         private SqlConnection SqlConn { get; set; }
-        private InterfaceSettings InterfaceSettings { get; set; }
+        private DataConnectionSettings DataConnectionSettings { get; set; }
 
-        public SubjectMySqlService(InterfaceSettings interfaceSettings)
+        public SubjectMySqlService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
-            Subjects = new List<Subject>();
+            this.DataConnectionSettings = dataConnectionSettings;
+            this.Subjects = new List<Subject>();
         }
 
         private List<Subject> Subjects { get; set; }

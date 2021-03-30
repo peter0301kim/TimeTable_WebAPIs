@@ -10,11 +10,11 @@ namespace TimeTableWebAPI.Services.SubjectService
     public class SubjectMockService : ISubjectService
     {
         private static Logger Log = LogManager.GetCurrentClassLogger();
-        private InterfaceSettings InterfaceSettings { get; set; }
+        private DataConnectionSettings DataConnectionSettings { get; set; }
         private List<Subject> Subjects { get; set; }
-        public SubjectMockService(InterfaceSettings interfaceSettings)
+        public SubjectMockService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
+            this.DataConnectionSettings = DataConnectionSettings;
             Subjects = new List<Subject>();
         }
         public async Task<Subject> CreateSubject(Subject subject)

@@ -18,35 +18,33 @@ namespace TimeTableWebAPI
         static DependencyInjector()
         {
             _container = new TinyIoCContainer();
-
-            //_container.Register<IMfdSolutionService, PapercutService>();
         }
 
-        public static void UpdateInterfaceModeDependencies(InterfaceSettings interfaceSettings)
+        public static void UpdateInterfaceModeDependencies(DataConnectionSettings dataConnectionSettings)
         {
 
-            if (interfaceSettings.InterfaceMode == InterfaceMode.Mock)
+            if (dataConnectionSettings.DataConnectionMode == DataConnectionMode.Mock)
             {
-                _container.Register<ILecturerService, LecturerMockService>(new LecturerMockService(interfaceSettings));
-                _container.Register<ILecturerTimeTableService, LecturerTimeTableMockService>(new LecturerTimeTableMockService(interfaceSettings));
-                _container.Register<ISubjectService, SubjectMockService>(new SubjectMockService(interfaceSettings));
-                _container.Register<ITimeTableService, TimeTableMockService>(new TimeTableMockService(interfaceSettings));
+                _container.Register<ILecturerService, LecturerMockService>(new LecturerMockService(dataConnectionSettings));
+                _container.Register<ILecturerTimeTableService, LecturerTimeTableMockService>(new LecturerTimeTableMockService(dataConnectionSettings));
+                _container.Register<ISubjectService, SubjectMockService>(new SubjectMockService(dataConnectionSettings));
+                _container.Register<ITimeTableService, TimeTableMockService>(new TimeTableMockService(dataConnectionSettings));
 
 
             }
-            else if(interfaceSettings.InterfaceMode == InterfaceMode.MsSql)
+            else if(dataConnectionSettings.DataConnectionMode == DataConnectionMode.MsSql)
             {
-                _container.Register<ILecturerService, LecturerMsSqlService>(new LecturerMsSqlService(interfaceSettings));
-                _container.Register<ILecturerTimeTableService, LecturerTimeTableMsSqlService>(new LecturerTimeTableMsSqlService(interfaceSettings));
-                _container.Register<ISubjectService, SubjectMsSqlService>(new SubjectMsSqlService(interfaceSettings));
-                _container.Register<ITimeTableService, TimeTableMsSqlService>(new TimeTableMsSqlService(interfaceSettings));
+                _container.Register<ILecturerService, LecturerMsSqlService>(new LecturerMsSqlService(dataConnectionSettings));
+                _container.Register<ILecturerTimeTableService, LecturerTimeTableMsSqlService>(new LecturerTimeTableMsSqlService(dataConnectionSettings));
+                _container.Register<ISubjectService, SubjectMsSqlService>(new SubjectMsSqlService(dataConnectionSettings));
+                _container.Register<ITimeTableService, TimeTableMsSqlService>(new TimeTableMsSqlService(dataConnectionSettings));
             }
-            else if (interfaceSettings.InterfaceMode == InterfaceMode.MySql)
+            else if (dataConnectionSettings.DataConnectionMode == DataConnectionMode.MySql)
             {
-                _container.Register<ILecturerService, LecturerMySqlService>(new LecturerMySqlService(interfaceSettings));
-                _container.Register<ILecturerTimeTableService, LecturerTimeTableMySqlService>(new LecturerTimeTableMySqlService(interfaceSettings));
-                _container.Register<ISubjectService, SubjectMySqlService>(new SubjectMySqlService(interfaceSettings));
-                _container.Register<ITimeTableService, TimeTableMySqlService>(new TimeTableMySqlService(interfaceSettings));
+                _container.Register<ILecturerService, LecturerMySqlService>(new LecturerMySqlService(dataConnectionSettings));
+                _container.Register<ILecturerTimeTableService, LecturerTimeTableMySqlService>(new LecturerTimeTableMySqlService(dataConnectionSettings));
+                _container.Register<ISubjectService, SubjectMySqlService>(new SubjectMySqlService(dataConnectionSettings));
+                _container.Register<ITimeTableService, TimeTableMySqlService>(new TimeTableMySqlService(dataConnectionSettings));
 
             }
         }

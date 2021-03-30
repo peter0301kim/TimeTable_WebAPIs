@@ -9,11 +9,11 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
 {
     public class LecturerTimeTableMySqlService : ILecturerTimeTableService
     {
-        private InterfaceSettings InterfaceSettings { get; set; }
+        private DataConnectionSettings DataConnectionSettings { get; set; }
 
-        public LecturerTimeTableMySqlService(InterfaceSettings interfaceSettings)
+        public LecturerTimeTableMySqlService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
+            this.DataConnectionSettings = dataConnectionSettings;
 
         }
         public async Task<List<TimeTable>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks)
@@ -25,7 +25,7 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
 
             var tTables = new List<TimeTable>();
 
-            using (var db = new AppDb(InterfaceSettings.ConnectionString))
+            using (var db = new AppDb(DataConnectionSettings.ConnectionString))
             {
                 db.Connection.Open();
 

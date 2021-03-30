@@ -9,10 +9,10 @@ namespace TimeTableWebAPI.Services.TimeTableService
 {
     public class TimeTableMsSqlService : ITimeTableService
     {
-        private InterfaceSettings InterfaceSettings { get; set; }
-        public TimeTableMsSqlService(InterfaceSettings interfaceSettings)
+        private DataConnectionSettings DataConnectionSettings { get; set; }
+        public TimeTableMsSqlService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
+            this.DataConnectionSettings = dataConnectionSettings;
         }
         public async Task<List<TimeTable>> GetTimeTables(string campusId, string roomId, string dayOfWeek)
         {
@@ -21,7 +21,7 @@ namespace TimeTableWebAPI.Services.TimeTableService
 
             List<TimeTable> tTables = new List<TimeTable>();
 
-            using (SqlConnection con = new SqlConnection(InterfaceSettings.ConnectionString))
+            using (SqlConnection con = new SqlConnection(DataConnectionSettings.ConnectionString))
             {
                 con.Open();
 

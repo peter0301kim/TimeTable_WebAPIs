@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace TimeTableWebAPI
 {
-    public class InterfaceSettings
+    public class DataConnectionSettings
     {
-        public InterfaceMode InterfaceMode{ get; set; }
+        public DataConnectionMode DataConnectionMode { get; set; }
         public string ConnectionString { get; set; }
     }
 
-    public enum InterfaceMode
+    public enum DataConnectionMode
     {
         Mock,
         MsSql,

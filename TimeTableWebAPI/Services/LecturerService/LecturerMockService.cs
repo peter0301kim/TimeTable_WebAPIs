@@ -14,15 +14,13 @@ namespace TimeTableWebAPI.Services.LecturerService
         private static Logger Log = LogManager.GetCurrentClassLogger();
         
         private string CurrentDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        private InterfaceSettings InterfaceSettings { get; set; }
-
-
+        private DataConnectionSettings DataConnectionSettings { get; set; }
         private List<Lecturer> Lecturers { get; set; }
 
-        public LecturerMockService(InterfaceSettings interfaceSettings)
+        public LecturerMockService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
-            Lecturers = new List<Lecturer>();
+            this.DataConnectionSettings = dataConnectionSettings;
+            this.Lecturers = new List<Lecturer>();
         }
         public async Task<ApiReturnValue<Lecturers>> CreateLecturer(Lecturer lecturer)
         {

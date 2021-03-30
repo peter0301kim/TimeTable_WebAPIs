@@ -33,8 +33,8 @@ namespace TimeTableWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
         {
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
-            DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             var subjects = await subjectService.GetSubjects();
 
@@ -47,8 +47,8 @@ namespace TimeTableWebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Subject>> GetSubject(string id)
         {
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
-            DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             var subject = await subjectService.ReadSubject(id);
 
@@ -66,8 +66,8 @@ namespace TimeTableWebAPI.Controllers
                 return BadRequest();
             }
 
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
-            DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             var retSubject = await subjectService.UpdateSubject(id, subject);
 
@@ -78,8 +78,8 @@ namespace TimeTableWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Subject>> PosttblSubject(Subject subject)
         {
-            var interfacesettings = JsonConvert.DeserializeObject<InterfaceSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
-            DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             Subject retSubject = await subjectService.CreateSubject(subject);
 

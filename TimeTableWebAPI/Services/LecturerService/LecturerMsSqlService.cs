@@ -41,11 +41,11 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUs
         public MsSqlConnectionSettings ConnectionSettings { get; set; }
         private string ConnectionFile { get; set; }
         private SqlConnection SqlConn { get; set; }
-        private InterfaceSettings InterfaceSettings { get; set; }
-        public LecturerMsSqlService(InterfaceSettings interfaceSettings)
+        private DataConnectionSettings DataConnectionSettings { get; set; }
+        public LecturerMsSqlService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
-            Lecturers = new List<Lecturer>();
+            this.DataConnectionSettings = dataConnectionSettings;
+            this.Lecturers = new List<Lecturer>();
         }
 
         private List<Lecturer> Lecturers { get; set; }
@@ -114,7 +114,7 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUs
                 int lecturerCount = 0;
                 try
                 {
-                    using (SqlConnection con = new SqlConnection(InterfaceSettings.ConnectionString))
+                    using (SqlConnection con = new SqlConnection(DataConnectionSettings.ConnectionString))
                     {
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {
@@ -169,7 +169,7 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUs
 
                 try
                 {
-                    using (SqlConnection con = new SqlConnection(InterfaceSettings.ConnectionString))
+                    using (SqlConnection con = new SqlConnection(DataConnectionSettings.ConnectionString))
                     {
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {
@@ -223,7 +223,7 @@ INSERT INTO Lecturer (LecturerId,GivenName,LastName,EmailAddress,InsertDate,IsUs
 
                 try
                 {
-                    using (SqlConnection con = new SqlConnection(InterfaceSettings.ConnectionString))
+                    using (SqlConnection con = new SqlConnection(DataConnectionSettings.ConnectionString))
                     {
                         using (SqlCommand cmd = new SqlCommand(query, con))
                         {

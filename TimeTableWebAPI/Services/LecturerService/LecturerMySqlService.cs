@@ -15,10 +15,10 @@ namespace TimeTableWebAPI.Services.LecturerService
         public MsSqlConnectionSettings ConnectionSettings { get; set; }
         private string ConnectionFile { get; set; }
         private SqlConnection SqlConn { get; set; }
-        private InterfaceSettings InterfaceSettings { get; set; }
-        public LecturerMySqlService(InterfaceSettings interfaceSettings)
+        private DataConnectionSettings DataConnectionSettings { get; set; }
+        public LecturerMySqlService(DataConnectionSettings dataConnectionSettings)
         {
-            InterfaceSettings = interfaceSettings;
+            DataConnectionSettings = dataConnectionSettings;
             Lecturers = new List<Lecturer>();
         }
 
@@ -90,7 +90,7 @@ namespace TimeTableWebAPI.Services.LecturerService
 
                 List<Lecturer> lstLecturer = new List<Lecturer>();
 
-                using (var db = new AppDb(InterfaceSettings.ConnectionString))
+                using (var db = new AppDb(DataConnectionSettings.ConnectionString))
                 {
                     db.Connection.Open();
 
