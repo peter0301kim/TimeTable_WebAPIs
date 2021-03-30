@@ -33,16 +33,16 @@ namespace TimeTableWebAPI.Services.SubjectService
             return subject;
         }
 
-        public async Task<Subject> ReadSubject(string SubjectId)
+        public async Task<List<Subject>> ReadSubjects(string subjectName)
         {
 
             Subject Subject = new Subject();
             await Task.Delay(1000);
 
-            return Subject;
+            return new List<Subject>();
         }
 
-        public async Task<bool> UpdateSubject(string SubjectId, Subject Subject)
+        public async Task<bool> UpdateSubject(string subjectId, Subject subject)
         {
 
             await Task.Delay(1000);
@@ -50,7 +50,7 @@ namespace TimeTableWebAPI.Services.SubjectService
             return true;
         }
 
-        public async Task<bool> DeleteSubject(string SubjectId)
+        public async Task<bool> DeleteSubject(string subjectId)
         {
 
             await Task.Delay(1000);

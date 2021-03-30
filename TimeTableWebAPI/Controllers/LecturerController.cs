@@ -25,7 +25,7 @@ namespace TimeTableWebAPI.Controllers
         private static Logger Log = LogManager.GetCurrentClassLogger();
 
         private readonly AppGlobalSettings AppGlobalSettings;
-        private string InterfaceSettingsPathFile { get; set; }
+        private string DataConnectionSettingsPathFile { get; set; }
         private ILecturerService LecturerService { get; set; }
 
         public IConfiguration _configuration;
@@ -35,9 +35,11 @@ namespace TimeTableWebAPI.Controllers
             _configuration = configuration;
 
             AppGlobalSettings = appGlobalSettings.Value;
-            InterfaceSettingsPathFile = Path.Combine(AppGlobalSettings.CurrentDirectory, AppGlobalSettings.InterfaceSettingsFileName);
 
-            var interfacesettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+
+            DataConnectionSettingsPathFile = AppGlobalSettings.DataConnectionSettingsPathFile;
+
+            var interfacesettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(interfacesettings);
             
             LecturerService = DependencyInjector.Resolve<ILecturerService>();

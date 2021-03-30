@@ -17,23 +17,23 @@ namespace TimeTableWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SubjectController : ControllerBase
     {
         private readonly AppGlobalSettings AppGlobalSettings;
-        private string InterfaceSettingsPathFile { get; set; }
+        private string DataConnectionSettingsPathFile { get; set; }
 
         public SubjectController(IOptions<AppGlobalSettings> appGlobalSettings)
         {
             AppGlobalSettings = appGlobalSettings.Value;
-            InterfaceSettingsPathFile = Path.Combine(AppGlobalSettings.CurrentDirectory, AppGlobalSettings.InterfaceSettingsFileName);
+            DataConnectionSettingsPathFile = AppGlobalSettings.DataConnectionSettingsPathFile;
         }
 
         // GET: api/Subject
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Subject>>> GetSubjects()
         {
-            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             var subjects = await subjectService.GetSubjects();
@@ -43,18 +43,18 @@ namespace TimeTableWebAPI.Controllers
             return subjects;
         }
 
-        // GET: api/Subject/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Subject>> GetSubject(string id)
+        // GET: api/Subject/design
+        [HttpGet("{subjectName}")]
+        public async Task<ActionResult<List<Subject>>> GetSubjects(string subjectName)
         {
-            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
-            var subject = await subjectService.ReadSubject(id);
+            var subjects = await subjectService.ReadSubjects(subjectName);
 
-            if (subject == null){   return NotFound();  }
+            if (subjects == null){   return NotFound();  }
 
-            return subject;
+            return subjects;
         }
 
         // PUT: api/Subject/5
@@ -66,7 +66,7 @@ namespace TimeTableWebAPI.Controllers
                 return BadRequest();
             }
 
-            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             var retSubject = await subjectService.UpdateSubject(id, subject);
@@ -78,7 +78,7 @@ namespace TimeTableWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Subject>> PosttblSubject(Subject subject)
         {
-            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
             var subjectService = DependencyInjector.Resolve<ISubjectService>();
             Subject retSubject = await subjectService.CreateSubject(subject);

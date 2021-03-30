@@ -19,13 +19,13 @@ namespace TimeTableWebAPI.Controllers
     public class LecturerTimeTableController : ControllerBase
     {
         private readonly AppGlobalSettings AppGlobalSettings;
-        private string InterfaceSettingsPathFile { get; set; }
+        private string DataConnectionSettingsPathFile { get; set; }
 
 
         public LecturerTimeTableController(IOptions<AppGlobalSettings> appGlobalSettings)
         {
             AppGlobalSettings = appGlobalSettings.Value;
-            InterfaceSettingsPathFile = Path.Combine(AppGlobalSettings.CurrentDirectory, AppGlobalSettings.InterfaceSettingsFileName);
+            DataConnectionSettingsPathFile = AppGlobalSettings.DataConnectionSettingsPathFile;
         }
 
 
@@ -38,7 +38,7 @@ namespace TimeTableWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(InterfaceSettingsPathFile));
+            var dataConnectionSettings = JsonConvert.DeserializeObject<DataConnectionSettings>(System.IO.File.ReadAllText(DataConnectionSettingsPathFile));
             DependencyInjector.UpdateInterfaceModeDependencies(dataConnectionSettings);
 
             var lecturerTimeTableService = DependencyInjector.Resolve<ILecturerTimeTableService>();

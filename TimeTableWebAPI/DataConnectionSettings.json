@@ -1,4 +1,4 @@
 {
-  "DataConnectionMode": 1, //0:Mock, 1:MsSql, 2:MySql
+  "DataConnectionMode": 0, //0:Mock, 1:MsSql, 2:MySql
   "ConnectionString": "Data Source=.\\SQLEXPRESS; Initial Catalog=MyDatabase; Persist Security Info=False; Integrated Security=SSPI;"
 }

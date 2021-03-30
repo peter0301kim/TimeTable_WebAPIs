@@ -9,7 +9,7 @@ namespace TimeTableWebAPI.Services.SubjectService
     public interface ISubjectService
     {
         Task<Subject> CreateSubject(Subject subject);
-        Task<Subject> ReadSubject(string subjectId);
+        Task<List<Subject>> ReadSubjects(string subjectName);
         Task<bool> UpdateSubject(string subjectId, Subject subject);
         Task<bool> DeleteSubject(string subjectId);
 

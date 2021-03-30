@@ -12,6 +12,7 @@ namespace TimeTableWebAPI.Services.SubjectService
         private static Logger Log = LogManager.GetCurrentClassLogger();
         private DataConnectionSettings DataConnectionSettings { get; set; }
         private List<Subject> Subjects { get; set; }
+
         public SubjectMockService(DataConnectionSettings dataConnectionSettings)
         {
             this.DataConnectionSettings = DataConnectionSettings;
@@ -24,12 +25,13 @@ namespace TimeTableWebAPI.Services.SubjectService
 
             return subject;
         }
-        public async Task<Subject> ReadSubject(string subjectId)
+        public async Task<List<Subject>> ReadSubjects(string subjectName)
         {
-            Subject lecturer = new Subject();
-            await Task.Delay(1000);
+            await CreateSampleSubjects();
 
-            return lecturer;
+            var value = (from s in Subjects where s.SubjectDescription.ToLower().Contains(subjectName.ToLower()) select s).ToList();
+
+            return value;
         }
         public async Task<bool> UpdateSubject(string subjectId, Subject subject)
         {
@@ -48,19 +50,27 @@ namespace TimeTableWebAPI.Services.SubjectService
         {
             List<Subject> sampleSubjects = new List<Subject>()
             {
-                new Subject { SubjectCode = "3000000001", SubjectDescription = "Thomas" },
-                new Subject { SubjectCode = "3000000002", SubjectDescription = "Robert"},
-                new Subject { SubjectCode = "3000000003", SubjectDescription = "John"},
-            };
-            await Task.Delay(1000);
+                new Subject { SubjectCode = "IT-1000000001", SubjectDescription = "The Complete 2021 Web Development Bootcamp" },
+                new Subject { SubjectCode = "DE-3600000002", SubjectDescription = "Complete Blender Creator: Learn 3D Modelling for Beginners"},
+                new Subject { SubjectCode = "IT-1000000003", SubjectDescription = "Python for Data Science and Machine Learning"},
 
+                new Subject { SubjectCode = "IT-1000000020", SubjectDescription = "React - Guide (incl Hooks, React Router, Redux)" },
+                new Subject { SubjectCode = "DE-3600000032", SubjectDescription = "Advanced 3D Modelling"},
+                new Subject { SubjectCode = "DR-5000000003", SubjectDescription = "The Art & Science of Drawing / BASIC SKILLS"},
+                new Subject { SubjectCode = "IT-1000000301", SubjectDescription = "The Complete 2021 Web Development Bootcamp" },
+                new Subject { SubjectCode = "DR-5100000002", SubjectDescription = "Environment Art School: Complete Perspective Drawing Course"},
+                new Subject { SubjectCode = "IT-1000000303", SubjectDescription = "Machine Learning "},
+
+
+            };
             Subjects = sampleSubjects;
 
             return true;
         }
         public async Task<List<Subject>> GetSubjects()
         {
-            await Task.Delay(1000);
+
+            await CreateSampleSubjects();
 
             return Subjects;
         }
