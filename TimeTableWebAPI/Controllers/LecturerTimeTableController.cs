@@ -30,8 +30,8 @@ namespace TimeTableWebAPI.Controllers
 
 
         // GET: api/LecturerTimeTable/
-        //[HttpGet("{lecturerName}/{dayOfWeeks}")]
-        [HttpGet]
+        [HttpGet("{lecturerName}/{dayOfWeeks}")]
+        //[HttpGet]
         public async Task<ActionResult<ApiReturnValue<TimeTables>>> GetLecturerTimeTable([FromRoute] string lecturerName, [FromRoute] string dayOfWeeks)
         //public async Task<ActionResult<ApiReturnValue<TimeTables>>> GetLecturerTimeTable(string lecturerName, string dayOfWeeks)
         {
