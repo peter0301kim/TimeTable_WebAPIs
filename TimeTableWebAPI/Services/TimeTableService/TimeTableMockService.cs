@@ -13,18 +13,39 @@ namespace TimeTableWebAPI.Services.TimeTableService
         {
             this.DataConnectionSettings = dataConnectionSettings;
         }
-        public async Task<List<TimeTable>> GetTimeTables(string campusId, string roomId, string dayOfWeek)
+        public async Task<ApiReturnValue<TimeTables>> GetTimeTables(string campusId, string roomId, string dayOfWeek)
         {
-            List<TimeTable> tTables = new List<TimeTable>()
+            List<TimeTable> lstTable = new List<TimeTable>()
             {
-                new TimeTable { Crn = "100001", DayOfWeek = "Thomas", ClassTime = "Williams", Campus = "Thomas@xxx.com", SubjectCode = "", SubjectDesc = "", ClassRoom = "", LecturerId = "", LecturerName = "" },
-                new TimeTable { Crn = "100002", DayOfWeek = "Robert", ClassTime = "Brown", Campus = "Robert@xxx.com", SubjectCode = "", SubjectDesc = "", ClassRoom = "", LecturerId = "", LecturerName = "" },
-                new TimeTable { Crn = "100003", DayOfWeek = "John", ClassTime = "Wilson", Campus = "John@xxx.com", SubjectCode = "", SubjectDesc = "", ClassRoom = "", LecturerId = "", LecturerName = "" },
+                    new Models.TimeTable()
+                    {
+                        Crn = "CR10001", DayOfWeek = "Mon", ClassTime = "11:00-13:00", Campus = "City Campus", SubjectCode = "IT-1000000001", SubjectDesc = "The Complete 2021 Web Development Bootcamp",
+                        ClassRoom = "C101", LecturerId = "LE-97898",LecturerName = "Lee",StartTerm = "1",EndTerm = "4"
+                    },
+                    new Models.TimeTable(){
+                        Crn = "CR10002", DayOfWeek = "Tue", ClassTime = "14:00-16:00", Campus = "City East Campus", SubjectCode = "DE-3600000002", SubjectDesc = "Complete Blender Creator: Learn 3D Modelling for Beginners",
+                        ClassRoom = "C305", LecturerId = "LE-20098",LecturerName = "Williams",StartTerm = "1",EndTerm = "4"
+                    },
+                    new Models.TimeTable() {
+                        Crn = "CR10003", DayOfWeek = "Wed", ClassTime = "10:00-12:00", Campus = "City Campus", SubjectCode = "IT-1000000003", SubjectDesc = "Python for Data Science and Machine Learning",
+                        ClassRoom = "A205", LecturerId = "LE-30989",LecturerName = "Ted",StartTerm = "1",EndTerm = "4"
+                    },
             };
 
-            await Task.Delay(1000);
 
-            return tTables;
+            lstTable = (from s in lstTable 
+                        where s.Campus.ToLower().Contains(campusId.ToLower()) &&
+                              s.ClassRoom.ToLower().Contains(roomId.ToLower()) &&
+                              s.DayOfWeek.ToLower().Contains(dayOfWeek.ToLower())
+                        select s).ToList();
+
+            ApiReturnValue<TimeTables> apiReturnValue = new ApiReturnValue<TimeTables>()
+            {
+                IsSuccess = true,
+                Error = new ApiReturnError() { displayMessage = "", errorMessage = "" },
+                Object = new TimeTables() { TotalCount = lstTable.Count() , PageNumber = 1, PageSize = 100, Rows = lstTable }
+            };
+            return apiReturnValue;
 
         }
 

@@ -15,7 +15,7 @@ namespace TimeTableWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class LecturerTimeTableController : ControllerBase
     {
         private readonly AppGlobalSettings AppGlobalSettings;
@@ -29,9 +29,11 @@ namespace TimeTableWebAPI.Controllers
         }
 
 
-        // GET: api/TimeTable/5
+        // GET: api/LecturerTimeTable/
+        //[HttpGet("{lecturerName}/{dayOfWeeks}")]
         [HttpGet]
-        public async Task<IActionResult> GetLecturerTimeTable([FromRoute] string lecturerName, [FromRoute] string dayOfWeeks)
+        public async Task<ActionResult<ApiReturnValue<TimeTables>>> GetLecturerTimeTable([FromRoute] string lecturerName, [FromRoute] string dayOfWeeks)
+        //public async Task<ActionResult<ApiReturnValue<TimeTables>>> GetLecturerTimeTable(string lecturerName, string dayOfWeeks)
         {
             if (!ModelState.IsValid)
             {
@@ -43,9 +45,11 @@ namespace TimeTableWebAPI.Controllers
 
             var lecturerTimeTableService = DependencyInjector.Resolve<ILecturerTimeTableService>();
 
-            List<TimeTable> timeTables = await lecturerTimeTableService.GetLecturerTimeTables(lecturerName, dayOfWeeks);
+            var apiReturnValue = await lecturerTimeTableService.GetLecturerTimeTables(lecturerName, dayOfWeeks);
 
-            return Ok(timeTables);
+            if (apiReturnValue == null) { return NotFound(); }
+
+            return apiReturnValue;
 
         }
     }

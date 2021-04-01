@@ -8,6 +8,6 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
 {
     public interface ILecturerTimeTableService
     {
-        Task<List<TimeTable>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks);
+        Task<ApiReturnValue<TimeTables>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks);
     }
 }

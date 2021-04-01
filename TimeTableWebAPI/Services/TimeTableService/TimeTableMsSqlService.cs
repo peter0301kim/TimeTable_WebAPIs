@@ -14,7 +14,7 @@ namespace TimeTableWebAPI.Services.TimeTableService
         {
             this.DataConnectionSettings = dataConnectionSettings;
         }
-        public async Task<List<TimeTable>> GetTimeTables(string campusId, string roomId, string dayOfWeek)
+        public async Task<ApiReturnValue<TimeTables>> GetTimeTables(string campusId, string roomId, string dayOfWeek)
         {
 
             //string connectionString = _conStrings.TafeBuddyDbContext;
@@ -66,8 +66,15 @@ namespace TimeTableWebAPI.Services.TimeTableService
                 con.Close();
             }
 
+            ApiReturnValue<TimeTables> apiReturnValue = new ApiReturnValue<TimeTables>();
+            apiReturnValue.IsSuccess = true;
+            apiReturnValue.Error = null;
+            apiReturnValue.Object.PageSize = 100;
+            apiReturnValue.Object.PageNumber = 1;
+            apiReturnValue.Object.TotalCount = tTables.Count();
+            apiReturnValue.Object.Rows = tTables;
 
-            return tTables;
+            return apiReturnValue;
         }
 
     }

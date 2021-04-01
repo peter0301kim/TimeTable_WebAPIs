@@ -16,14 +16,14 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
         {
             this.DataConnectionSettings = dataConnectionSettings;
         }
-        public async Task<List<TimeTable>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks)
+        public async Task<ApiReturnValue<TimeTables>> GetLecturerTimeTables(string lecturerName, string dayOfWeeks)
         {
 
             var strDayOfWeeks = "(" + dayOfWeeks + ")";
 
             //var connectionString = _conStrings.TafeSaItStudiesContext;
 
-            var tTables = new List<TimeTable>();
+            var lstTimeTables = new List<TimeTable>();
 
             using (var db = new AppDb(DataConnectionSettings.ConnectionString))
             {
@@ -68,7 +68,7 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
                                 EndTerm = (string)reader["EndTerm"]
                             };
 
-                            tTables.Add(table);
+                            lstTimeTables.Add(table);
                         }
                     }
                     reader.Close();
@@ -77,7 +77,13 @@ namespace TimeTableWebAPI.Services.LecturerTimeTable
             }
 
 
-            return tTables;
+            ApiReturnValue<TimeTables> apiReturnValue = new ApiReturnValue<TimeTables>()
+            {
+                IsSuccess = true,
+                Error = new ApiReturnError() { displayMessage = "", errorMessage = "" },
+                Object = new TimeTables() { TotalCount = lstTimeTables.Count(), PageNumber = 1, PageSize = 100, Rows = lstTimeTables }
+            };
+            return apiReturnValue;
         }
     }
 }
